@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>English Explorers</title>
+<style>
+:root{--bg:#eaf3ff;--card:#fff;--tx:#10203f;--mu:#566a8d;--bd:#cfdcf2;--a0:#15924a;--a1:#2260e0;--a2:#e0580c;--ok:#15924a;--no:#d62d2d;--on:#fff;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0c1630;--card:#18264a;--tx:#f0f5ff;--mu:#9db0d3;--bd:#2c3d69;--a0:#4be08a;--a1:#6ea2ff;--a2:#ff9a52;--ok:#4be08a;--no:#ff7b7b;--on:#0c1630;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0c1630;--card:#18264a;--tx:#f0f5ff;--mu:#9db0d3;--bd:#2c3d69;--a0:#4be08a;--a1:#6ea2ff;--a2:#ff9a52;--ok:#4be08a;--no:#ff7b7b;--on:#0c1630;color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:17px/1.4 ui-rounded,"Nunito","Trebuchet MS",system-ui,sans-serif}
+#app{max-width:640px;margin:0 auto;padding:16px}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible{outline:3px solid var(--c,var(--a1));outline-offset:2px}
+.top{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:14px}
+h1{font-size:26px;margin:0;font-weight:800}h2{font-size:23px;margin:4px 0 12px}
+.pill{background:var(--card);border:2px solid var(--bd);border-radius:99px;padding:5px 13px;font-weight:800;white-space:nowrap}
+.mu{color:var(--mu);margin:0 0 14px}
+.back{background:none;border:0;color:var(--c);font-weight:800;padding:6px 0}
+.lv{display:flex;gap:14px;align-items:center;width:100%;text-align:left;background:var(--card);border:2px solid var(--bd);border-left:12px solid var(--c);border-radius:20px;padding:14px;margin-bottom:12px}
+.lv b{font-size:20px;display:block}.lv small{color:var(--mu)}
+.em{font-size:42px;line-height:1}
+.st{margin-left:auto;font-size:20px;color:var(--c);white-space:nowrap}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px}
+.card{background:var(--card);border:2px solid var(--bd);border-radius:16px;padding:12px 6px;text-align:center}
+.card .em{display:block;margin-bottom:4px;word-break:break-all}.card.sm .em{font-size:22px;min-height:42px}
+.card b{font-size:18px}
+.line{display:flex;gap:10px;width:100%;text-align:left;background:var(--card);border:2px solid var(--bd);border-radius:14px;padding:10px 12px;margin-bottom:8px}
+.line i{font-style:normal;font-weight:800;color:var(--c);min-width:52px}
+.big{width:100%;background:var(--c);color:var(--on);border:0;border-radius:18px;padding:16px;font-size:21px;font-weight:800;margin-top:16px}
+.qp{background:var(--card);border:2px solid var(--bd);border-radius:20px;padding:22px 14px;text-align:center;margin-bottom:14px;font-size:22px;font-weight:700}
+.qp .em{font-size:84px}.qp.sm .em{font-size:34px;word-break:break-all}
+.opt{display:block;width:100%;background:var(--card);border:3px solid var(--bd);border-radius:16px;padding:14px;font-size:20px;font-weight:700;margin-bottom:10px}
+.opt.ok{background:var(--ok);border-color:var(--ok);color:var(--on)}.opt.no{background:var(--no);border-color:var(--no);color:var(--on)}
+.fb{min-height:30px;text-align:center;font-weight:800;font-size:19px}
+.res{text-align:center}.res .em{font-size:64px;letter-spacing:6px}
+</style></head><body><div id="app"></div>
+<script>
+const $=document.getElementById("app");
+const sh=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+const say=t=>{try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang="en-US";u.rate=.85;speechSynthesis.speak(u)}catch(e){}};
+let S={};try{S=JSON.parse(localStorage.getItem("ee")||"{}")}catch(e){}
+const save=()=>{try{localStorage.setItem("ee",JSON.stringify(S))}catch(e){}};
+const tot=()=>Object.values(S).reduce((a,b)=>a+b,0);
+const stars=n=>"★".repeat(n)+"☆".repeat(3-n);
+const AB=[["🍎","Apple"],["⚽","Ball"],["🐱","Cat"],["🐶","Dog"],["🐘","Elephant"],["🐟","Fish"],["🍇","Grapes"],["🏠","House"],["🍦","Ice cream"],["🧃","Juice"],["🔑","Key"],["🦁","Lion"],["🌙","Moon"],["🪹","Nest"],["🍊","Orange"],["🐧","Penguin"],["👑","Queen"],["🌈","Rainbow"],["☀️","Sun"],["🐯","Tiger"],["☂️","Umbrella"],["🎻","Violin"],["🐋","Whale"],["🎶","Xylophone"],["⛵","Yacht"],["🦓","Zebra"]].map(([e,w])=>[e,w,w[0]+w[0].toLowerCase()]);
+const NU=["One","Two","Three","Four","Five","Six","Seven","Eight","Nine","Ten"].map((w,i)=>["⭐".repeat(i+1),w,i+1]);
+const L=[
+{id:"a0",n:"Starter",l:"A0",e:"🚀",d:"Alphabet, numbers, colors, animals",t:[
+{id:"abc",n:"Alphabet",e:"🔤",w:AB},
+{id:"num",n:"Numbers",e:"🔢",w:NU,sm:1},
+{id:"col",n:"Colors",e:"🎨",w:[["🔴","Red"],["🔵","Blue"],["🟢","Green"],["🟡","Yellow"],["🟠","Orange"],["🟣","Purple"],["⚫","Black"],["⚪","White"],["🟤","Brown"]]},
+{id:"ani",n:"Animals",e:"🦁",w:[["🐶","Dog"],["🐱","Cat"],["🐘","Elephant"],["🦁","Lion"],["🐵","Monkey"],["🐴","Horse"],["🐮","Cow"],["🐸","Frog"],["🦈","Shark"],["🐊","Crocodile"],["🦖","Dinosaur"]]}]},
+{id:"a1",n:"Beginner",l:"A1",e:"⭐",d:"Family, house, school, food",t:[
+{id:"fam",n:"Family",e:"👪",w:[["👨","Father"],["👩","Mother"],["👦","Brother"],["👧","Sister"],["👴","Grandfather"],["👵","Grandmother"],["👶","Baby"]]},
+{id:"hou",n:"House",e:"🏠",w:[["🛏️","Bed"],["🛋️","Sofa"],["🚪","Door"],["🪟","Window"],["🚿","Shower"],["🪑","Chair"],["📺","TV"],["🍳","Kitchen"]]},
+{id:"sch",n:"School",e:"🏫",w:[["📚","Book"],["✏️","Pencil"],["🎒","Bag"],["🖊️","Pen"],["🏫","School"],["🧑‍🏫","Teacher"],["✂️","Scissors"],["📏","Ruler"]]},
+{id:"foo",n:"Food",e:"🍕",w:[["🍎","Apple"],["🍌","Banana"],["🍞","Bread"],["🥛","Milk"],["🥚","Egg"],["🍕","Pizza"],["🍔","Burger"],["💧","Water"],["🧀","Cheese"]]}]},
+{id:"a2",n:"Elementary",l:"A1+",e:"🏆",d:"Dialogues, stories, real situations",t:[
+{id:"mee",n:"Meeting a friend",e:"👋",s:[["Tom","Hello! What’s your name?"],["Sam","Hi! My name is Sam."],["Tom","Nice to meet you, Sam."],["Sam","Nice to meet you too! How old are you?"],["Tom","I am eight years old."]],
+q:[["What is the first boy’s name?",["Tom","Sam","Ben"],0],["How old is Tom?",["Seven","Eight","Nine"],1],["What does Sam say?",["Goodbye!","Nice to meet you too!","I am hungry."],1]]},
+{id:"sho",n:"At the shop",e:"🛒",s:[["Boy","Hello! Can I have an apple, please?"],["Shop","Yes. Here you are."],["Boy","Thank you. How much is it?"],["Shop","It is one dollar."]],
+q:[["What does the boy want?",["A banana","An apple","A pizza"],1],["How much is it?",["One dollar","Two dollars","Ten dollars"],0],["What do you say after you get something?",["Thank you","Go away","Good night"],0]]},
+{id:"sto",n:"The little dinosaur",e:"🦖",s:[["","Dino is a little green dinosaur."],["","He lives in a big forest."],["","Every day he plays with his friend, a red bird."],["","One day, Dino is hungry. He eats a big apple."],["","Now he is happy!"]],
+q:[["What color is Dino?",["Green","Red","Blue"],0],["Who is Dino’s friend?",["A fish","A bird","A cat"],1],["What does Dino eat?",["An apple","Bread","Milk"],0]]}]}];
+let l,t,Q;
+const wrap=(c,h)=>`<div style="--c:var(--${c})">${h}</div>`;
+function home(){$.innerHTML=`<div class="top"><h1>English Explorers 🌍</h1><span class="pill">⭐ ${tot()}</span></div><p class="mu">Pick a level and start the adventure!</p>`+L.map((x,i)=>wrap(x.id,`<button class="lv" onclick="lvl(${i})"><span class="em">${x.e}</span><span><b>${x.n} · ${x.l}</b><small>${x.d}</small></span></button>`)).join("")}
+function lvl(i){l=L[i];$.innerHTML=wrap(l.id,`<button class="back" onclick="home()">‹ Home</button><h2>${l.e} ${l.n} · ${l.l}</h2>`+l.t.map((x,j)=>`<button class="lv" onclick="top_(${j})"><span class="em">${x.e}</span><b>${x.n}</b><span class="st">${stars(S[l.id+"."+x.id]||0)}</span></button>`).join(""))}
+function top_(j){t=typeof j=="number"?l.t[j]:t;const body=t.w?`<div class="grid">`+t.w.map((w,k)=>`<button class="card${t.sm?" sm":""}" onclick="say(t.w[${k}][1])"><span class="em">${w[0]}</span><b>${w[2]?w[2]+" · ":""}${w[1]}</b></button>`).join("")+`</div>`:t.s.map((s,k)=>`<button class="line" onclick="say(t.s[${k}][1])"><i>${s[0]||"🔊"}</i><span>${s[1]}</span></button>`).join("");
+$.innerHTML=wrap(l.id,`<button class="back" onclick="lvl(${L.indexOf(l)})">‹ ${l.n}</button><h2>${t.e} ${t.n}</h2><p class="mu">${t.w?"Tap a card to hear it.":"Tap a line to hear it."}</p>${body}<button class="big" onclick="quiz()">Start quiz 🎯</button>`)}
+function quiz(){const qs=t.w?sh(t.w).slice(0,5).map(w=>({p:w[0],a:w[1],o:sh([w[1],...sh(t.w.filter(x=>x[1]!=w[1])).slice(0,2).map(x=>x[1])])})):t.q.map(([p,o,a])=>({p,a:o[a],o:sh(o)}));Q={qs,i:0,sc:0,lock:0};ask()}
+function ask(){const q=Q.qs[Q.i];$.innerHTML=wrap(l.id,`<div class="top"><button class="back" onclick="top_()">✕ Quit</button><span class="pill">${Q.i+1} / ${Q.qs.length}</span></div><div class="qp${t.sm?" sm":""}">${t.w?`<span class="em">${q.p}</span>`:q.p}</div>`+q.o.map((o,k)=>`<button class="opt" onclick="ans(${k})">${o}</button>`).join("")+`<div class="fb" id="fb"></div>`);if(!t.w)say(q.p)}
+function ans(k){if(Q.lock)return;Q.lock=1;const q=Q.qs[Q.i],b=document.querySelectorAll(".opt"),ok=q.o[k]==q.a;if(ok)Q.sc++;b[k].classList.add(ok?"ok":"no");b[q.o.indexOf(q.a)].classList.add("ok");document.getElementById("fb").textContent=ok?"🎉 Great job!":"Not quite. It is “"+q.a+"”.";say(q.a);setTimeout(()=>{Q.lock=0;++Q.i<Q.qs.length?ask():end()},1700)}
+function end(){const n=Q.qs.length,s=Q.sc==n?3:Q.sc>=n*.6?2:Q.sc>0?1:0,key=l.id+"."+t.id;S[key]=Math.max(S[key]||0,s);save();
+$.innerHTML=wrap(l.id,`<div class="res"><h2>${s==3?"Perfect! 🏆":s?"Well done! 👏":"Keep practicing! 💪"}</h2><div class="em">${"⭐".repeat(s)||"🌱"}</div><p>You got ${Q.sc} out of ${n}.</p><button class="big" onclick="quiz()">Play again</button><button class="big" style="background:var(--card);color:var(--tx);border:2px solid var(--bd)" onclick="top_()">Back to learning</button></div>`)}
+home();
+</script></body></html>
