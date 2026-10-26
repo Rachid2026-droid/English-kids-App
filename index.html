@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="utf-8">
+<html lang="en"><head><link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#1e88e5">
+<link rel="icon" href="icon-192.png"><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>English Explorers</title>
 <style>
@@ -74,4 +76,8 @@ function ans(k){if(Q.lock)return;Q.lock=1;const q=Q.qs[Q.i],b=document.querySele
 function end(){const n=Q.qs.length,s=Q.sc==n?3:Q.sc>=n*.6?2:Q.sc>0?1:0,key=l.id+"."+t.id;S[key]=Math.max(S[key]||0,s);save();
 $.innerHTML=wrap(l.id,`<div class="res"><h2>${s==3?"Perfect! 🏆":s?"Well done! 👏":"Keep practicing! 💪"}</h2><div class="em">${"⭐".repeat(s)||"🌱"}</div><p>You got ${Q.sc} out of ${n}.</p><button class="big" onclick="quiz()">Play again</button><button class="big" style="background:var(--card);color:var(--tx);border:2px solid var(--bd)" onclick="top_()">Back to learning</button></div>`)}
 home();
+  
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("sw.js");
+  }
 </script></body></html>
